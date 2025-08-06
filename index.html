@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whispr - The Truth Has a New Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-red: #ff2d2d;
+            --accent-red-dark: #e02525;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --gradient-red: linear-gradient(135deg, #ff2d2d, #ff4444, #ff6b6b);
+            --gradient-dark: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            --blur-overlay: rgba(255, 45, 45, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 45, 45, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 45, 45, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, rgba(255, 45, 45, 0.1) 0%, transparent 70%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 45, 45, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 45, 45, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 45, 45, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .glitch-text {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(135deg, #ffffff, #ff2d2d, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitch 4s infinite, textShine 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(-2px, -2px); }
+            30% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            50% { transform: translate(-1px, 1px); }
+            60% { transform: translate(-1px, -1px); }
+            70% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
+        @keyframes textShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 22px 50px;
+            background: var(--gradient-red);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 10px 30px rgba(255, 45, 45, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 40px rgba(255, 45, 45, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* Enhanced How It Works */
+        .how-it-works {
+            padding: 140px 0;
+            background: var(--secondary-bg);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-red);
+            border-radius: 2px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-top: 80px;
+        }
+
+        .step {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-red);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent-red);
+            box-shadow: 0 25px 50px rgba(255, 45, 45, 0.3);
+            background: rgba(255, 45, 45, 0.05);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(255, 45, 45, 0.5);
+        }
+
+        .step h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Enhanced Anonymity Section */
+        .anonymity {
+            padding: 140px 0;
+            background: var(--primary-bg);
+        }
+
+        .anonymity-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .anonymity-text h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .anonymity-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 45, 45, 0.2);
+            position: relative;
+            padding-left: 40px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            color: var(--accent-red);
+            padding-left: 50px;
+        }
+
+        .feature-list li:before {
+            content: '→';
+            color: var(--accent-red);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .anonymity-visual {
+            position: relative;
+            text-align: center;
+        }
+
+        .lock-icon {
+            font-size: 12rem;
+            color: var(--accent-red);
+            opacity: 0.6;
+            animation: pulse 3s infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 45, 45, 0.4));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Enhanced Screenshots */
+        .screenshots {
+            padding: 140px 0;
+            background: var(--secondary-bg);
+        }
+
+        .phone-mockups {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+            flex-wrap: wrap;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: var(--gradient-dark);
+            border-radius: 40px;
+            padding: 25px;
+            position: relative;
+            border: 3px solid rgba(255, 45, 45, 0.3);
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 45, 45, 0.2);
+        }
+
+        .phone-mockup:nth-child(2) { animation-delay: -2s; }
+        .phone-mockup:nth-child(3) { animation-delay: -4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-25px) rotateY(5deg); }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 45, 45, 0.1);
+        }
+
+        .mock-content {
+            padding: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mock-header {
+            background: var(--gradient-red);
+            color: white;
+            padding: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 45, 45, 0.3);
+        }
+
+        .mock-post {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .mock-post:hover {
+            background: rgba(255, 45, 45, 0.05);
+            border-color: rgba(255, 45, 45, 0.3);
+        }
+
+        /* Enhanced Waitlist */
+        .waitlist {
+            padding: 140px 0;
+            background: var(--primary-bg);
+            text-align: center;
+        }
+
+        .waitlist-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent-red);
+            padding: 30px 25px;
+            border-radius: 20px;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 45, 45, 0.1), transparent);
+            transition: left 1s ease;
+        }
+
+        .countdown-item:hover::before {
+            left: 100%;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 45, 45, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            display: block;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(255, 45, 45, 0.5);
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .email-form {
+            max-width: 600px;
+            margin: 60px auto;
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 22px 25px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 45, 45, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .email-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 45, 45, 0.3);
+        }
+
+        .submit-btn {
+            padding: 22px 40px;
+            background: var(--gradient-red);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(255, 45, 45, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 45, 45, 0.6);
+        }
+
+        /* Enhanced Social Links */
+        .social-links {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent-red);
+            border-radius: 50%;
+            color: var(--accent-red);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent-red);
+            color: white;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 45, 45, 0.4);
+        }
+
+        /* Enhanced Footer */
+        footer {
+            padding: 80px 0;
+            background: var(--secondary-bg);
+            text-align: center;
+            border-top: 1px solid rgba(255, 45, 45, 0.2);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        footer a {
+            color: var(--accent-red);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* Enhanced Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .anonymity-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+            
+            .phone-mockups {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+            
+            .countdown {
+                gap: 20px;
+            }
+            
+            .countdown-item {
+                min-width: 100px;
+                padding: 25px 20px;
+            }
+            
+            .email-form {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Enhanced Particles Animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: particle 25s linear infinite;
+            box-shadow: 0 0 6px rgba(255, 45, 45, 0.8);
+        }
+
+        @keyframes particle {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(100px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(200px) scale(0);
+            }
+        }
+
+        /* Success Message Styles */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent-red);
+            padding: 30px 40px;
+            border-radius: 20px;
+            color: white;
+            font-size: 1.2rem;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">WHISPR</div>
+                <div class="nav-links">
+                    <a href="#how">How It Works</a>
+                    <a href="#safety">Safety</a>
+                    <a href="#join">Join Beta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="glitch-text">The Truth Has<br>A New Home</h1>
+                <p class="hero-subtitle">Where secrets live, confessions breathe, and the real stories from your campus and workplace finally see the light.</p>
+                <a href="#join" class="cta-button">Enter the Shadows</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <h2 class="section-title">Join the Underground</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Choose Your Territory</h3>
+                    <p>Select your university or workplace. Every confession stays within your community bubble.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Drop Your Truth</h3>
+                    <p>Post anonymously about what's really happening behind closed doors. No names, no traces.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Vote & Validate</h3>
+                    <p>Upvote the tea that's too real. The community decides what rises to the top.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anonymity & Safety -->
+    <section class="anonymity" id="safety">
+        <div class="container">
+            <div class="anonymity-content">
+                <div class="anonymity-text">
+                    <h2>Your Secrets Are Safe</h2>
+                    <p>We built this fortress for truth-tellers. Zero personal data collection, military-grade anonymization, and human moderation to keep it real but respectful.</p>
+                    <ul class="feature-list">
+                        <li>Complete anonymity guaranteed</li>
+                        <li>No personal data stored</li>
+                        <li>AI-powered content moderation</li>
+                        <li>Community reporting system</li>
+                        <li>Toxic content auto-removal</li>
+                    </ul>
+                </div>
+                <div class="anonymity-visual">
+                    <div class="lock-icon">🔒</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="screenshots">
+        <div class="container">
+            <h2 class="section-title">Peek Behind the Curtain</h2>
+            <div class="phone-mockups">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="mock-content">
+                            <div class="mock-header">Campus Feed</div>
+                            <div class="mock-post">"The professor everyone thinks is so nice literally makes his TAs do his research..."</div>
+                            <div class="mock-post">"Someone in accounting is definitely stealing lunches from the break room fridge 👀"</div>
+                            <div class="mock-post">"Plot twist: the 'random' dorm room checks aren't random at all..."</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="mock-content">
+                            <div class="mock-header">Office Secrets</div>
+                            <div class="mock-post">"Manager plays favorites harder than a high school clique. We all see it."</div>
+                            <div class="mock-post">"The 'urgent' project that kept us late? Boss knew about it for 2 months."</div>
+                            <div class="mock-post">"HR isn't here to help employees. Learned this the hard way."</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="mock-content">
+                            <div class="mock-header">Campus Drama</div>
+                            <div class="mock-post">"The student government 'election' results were decided before voting started..."</div>
+                            <div class="mock-post">"Library study room 304B has been a hookup spot for literally years"</div>
+                            <div class="mock-post">"Dining hall 'fresh' salads are 3 days old minimum"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Waitlist -->
+    <section class="waitlist" id="join">
+        <div class="container">
+            <h2 class="section-title">Join the Shadows</h2>
+            <p class="waitlist-subtitle">Be among the first to access the underground. Beta launches soon.</p>
+            
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">21</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">08</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">34</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">22</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+
+            <form class="email-form">
+                <input type="email" class="email-input" placeholder="Enter your email to join the revolution" required>
+                <button type="submit" class="submit-btn">Get Early Access</button>
+            </form>
+
+            <div class="social-links">
+                <a href="https://twitter.com/whisprapp" class="social-link" target="_blank">X</a>
+                <a href="https://instagram.com/whisprapp" class="social-link" target="_blank">IG</a>
+                <a href="https://discord.gg/whisprapp" class="social-link" target="_blank">DC</a>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Whispr. All rights reserved. <a href="https://whisprapp.com/privacy" target="_blank">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <p>Thank you for joining the Whispr revolution! Your secrets are safe with us.</p>
+    </div>  
+    <!-- JavaScript -->
+     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const countdown = document.querySelector('.countdown');
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        // 🔥 Change only this
+        const releaseInDays = 23;
+        const storedTargetDate = localStorage.getItem('targetDate');
+
+        let targetDate;
+
+        if (storedTargetDate) {
+            targetDate = new Date(storedTargetDate);
+        } else {
+            const now = new Date();
+            targetDate = new Date(now.getTime() + releaseInDays * 24 * 60 * 60 * 1000);
+            localStorage.setItem('targetDate', targetDate.toISOString());
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                countdown.innerHTML = '<p>We are live! Join the us!</p>';
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            daysElement.textContent = days.toString().padStart(2, '0');
+            hoursElement.textContent = hours.toString().padStart(2, '0');
+            minutesElement.textContent = minutes.toString().padStart(2, '0');
+            secondsElement.textContent = seconds.toString().padStart(2, '0');
+        }
+
+        updateCountdown(); // Initial call
+        setInterval(updateCountdown, 1000);
+
+        // Email Form Submission
+        const emailForm = document.querySelector('.email-form');
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = document.querySelector('.email-input');
+            const email = emailInput.value.trim();
+            if (email) {
+                emailInput.value = '';
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }
+        });
+
+        // Particles Animation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = Math.random() * 100 + 'vh';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+            particlesContainer.appendChild(particle);
+        }
+    });
+</script>
+</body>
+</html>
+<!-- End of HTML Document -->
+<!-- This HTML document is designed to be a modern, visually appealing landing page for the Whispr app, featuring a dark theme with vibrant red accents. It includes sections for navigation, a hero section, how it works, safety and anonymity, screenshots, a waitlist with a countdown timer, and social links. The design incorporates advanced CSS techniques such as gradients, animations, and responsive layouts to create an engaging user experience. The JavaScript handles the countdown timer and form submission, providing a seamless interaction for users. The particles animation adds a dynamic background effect, enhancing the overall aesthetic of the page. -->
+<!-- This code is structured to be clean and maintainable, with clear class names and organized sections. It is optimized for performance and user experience, ensuring fast loading times and smooth interactions. The use of modern web standards and best practices makes it compatible with a wide range of devices and browsers. The design is focused on user engagement, encouraging visitors to join the waitlist and follow the app on social media platforms. -->
+<!-- The success message is displayed after form submission, providing feedback to the user. The countdown timer dynamically updates every second, creating a sense of urgency for users to join the waitlist before the beta launch. The particles animation adds a unique touch, making the landing page visually striking and memorable. --> 
